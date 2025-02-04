@@ -1,0 +1,35 @@
+name: Deploy EC2 Instance
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AKIAX3DNHPQ2H2U547TN }}
+          aws-secret-access-key: ${{ secrets.qEEpS/j7n9UfKFj2Vf4r2LLx/vq5eN6vB16M5V/j }}
+          aws-region: ${{ secrets.us-east-1 }}
+
+      - name: Launch EC2 Instance
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-0c55b159cbfafe1f0 \  # Update AMI ID based on your region
+            --instance-type t2.micro \
+            --key-name MyKeyPair \  # Replace with your key pair
+            --security-groups default \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+          
+          echo "EC2 Instance ID: $INSTANCE_ID"
+          
+          # Wait for instance to be running
+          aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+
+          echo "EC2 Instance is now running!"
