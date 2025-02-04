@@ -13,8 +13,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{secrets.AKIAX3DNHPQ2H2U547TN }}
-          aws-secret-access-key: ${{secrets.qEEpS/j7n9UfKFj2Vf4r2LLx/vq5eN6vB16M5V/j}}
+          aws-access-key-id: ${{ secrets.AKIAX3DNHPQ2H2U547TN }}
+          aws-secret-access-key: ${{ secrets.qEEpS/j7n9UfKFj2Vf4r2LLx/vq5eN6vB16M5V/j }}
           aws-region: ${{ secrets.us-east-1 }}
 
       - name: Launch EC2 Instance
